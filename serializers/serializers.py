@@ -1,5 +1,6 @@
 from sqlmodel import SQLModel
-from models.models import AssetCategory
+from datetime import date
+from models.models import AssetCategory, TransactionType
 
 
 class AssetCategoryCreate(SQLModel):
@@ -16,7 +17,7 @@ class AssetCreate(SQLModel):
     ticker: str
     description: str | None
     detail: str | None
-    category_id: int | None = None
+    category_id: int | None
 
 
 class AssetOut(SQLModel):
@@ -26,3 +27,20 @@ class AssetOut(SQLModel):
     description: str | None
     detail: str | None
     category: AssetCategory | None
+
+
+class TransactionCreate(SQLModel):
+    asset_id: int
+    quantity: float
+    price: float
+    date: date
+    transaction_type: TransactionType
+
+
+class TransactionOut(SQLModel):
+    id: int
+    asset: AssetOut
+    quantity: float
+    price: float
+    date: date
+    transaction_type: TransactionType
