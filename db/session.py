@@ -1,19 +1,25 @@
 from typing import Annotated
 
 from fastapi import Depends
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine
 from sqlmodel import SQLModel, Session
 
-sqlite_file_name = "database.db"
-sqlite_url = f"sqlite:///{sqlite_file_name}"
-connect_args = {"check_same_thread": False}
-engine = create_engine(sqlite_url, connect_args=connect_args)
+# MariaDB connection details
+mariadb_host = "localhost"
+mariadb_port = "3307"
+mariadb_user = "root"
+mariadb_password = "abc123"
+mariadb_database = "portfolio"
+
+# Construct the MariaDB connection URL
+mariadb_url = f"mysql+pymysql://{mariadb_user}:{mariadb_password}@{mariadb_host}:{mariadb_port}/{mariadb_database}"
+
+# Create the SQLAlchemy engine for MariaDB
+engine = create_engine(mariadb_url)
 
 
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
-    with engine.connect() as connection:
-        connection.execute(text("PRAGMA foreign_keys=ON"))
 
 
 def get_session():
