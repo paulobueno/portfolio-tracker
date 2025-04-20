@@ -1,3 +1,4 @@
+import os
 from typing import Annotated
 
 from fastapi import Depends
@@ -5,11 +6,11 @@ from sqlalchemy import create_engine
 from sqlmodel import SQLModel, Session
 
 # MySQL connection details
-mysqldb_host = "localhost"
-mysqldb_port = "3307"
-mysqldb_user = "root"
-mysqldb_password = "abc123"
-mysqldb_database = "portfolio"
+mysqldb_host = os.getenv("MYSQL_HOST")
+mysqldb_port = os.getenv("MYSQL_PORT")
+mysqldb_user = os.getenv("MYSQL_USER")
+mysqldb_password = os.getenv("MYSQL_PASSWORD")
+mysqldb_database = os.getenv("MYSQL_DATABASE")
 
 # Construct the MySQL connection URL
 mysqldb_url = f"mysql+pymysql://{mysqldb_user}:{mysqldb_password}@{mysqldb_host}:{mysqldb_port}/{mysqldb_database}"
