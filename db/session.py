@@ -4,18 +4,18 @@ from fastapi import Depends
 from sqlalchemy import create_engine
 from sqlmodel import SQLModel, Session
 
-# MariaDB connection details
-mariadb_host = "localhost"
-mariadb_port = "3307"
-mariadb_user = "root"
-mariadb_password = "abc123"
-mariadb_database = "portfolio"
+# MySQL connection details
+mysqldb_host = "localhost"
+mysqldb_port = "3307"
+mysqldb_user = "root"
+mysqldb_password = "abc123"
+mysqldb_database = "portfolio"
 
-# Construct the MariaDB connection URL
-mariadb_url = f"mysql+pymysql://{mariadb_user}:{mariadb_password}@{mariadb_host}:{mariadb_port}/{mariadb_database}"
+# Construct the MySQL connection URL
+mysqldb_url = f"mysql+pymysql://{mysqldb_user}:{mysqldb_password}@{mysqldb_host}:{mysqldb_port}/{mysqldb_database}"
 
-# Create the SQLAlchemy engine for MariaDB
-engine = create_engine(mariadb_url)
+# Create the SQLAlchemy engine for MySQL
+engine = create_engine(mysqldb_url)
 
 
 def create_db_and_tables():
