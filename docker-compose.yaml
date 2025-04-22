@@ -1,21 +1,18 @@
-version: '3.8'
-
 services:
   mysql:
     image: mysql:8.3.0
     container_name: mysql-container
+    env_file:
+      - .env
     ports:
       - "3307:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: abc123
-      MYSQL_DATABASE: portfolio
     volumes:
       - mysql_data:/var/lib/mysql
     restart: always
     networks:
       - app-network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD-SHELL", "mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -e 'SELECT 1;' $MYSQL_DATABASE"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -23,14 +20,10 @@ services:
     build:
       context: .
     container_name: fastapi-app
+    env_file:
+      - .env
     ports:
       - "8000:8000"
-    environment:
-      - MYSQL_HOST=mysql
-      - MYSQL_PORT=3306
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=abc123
-      - MYSQL_DATABASE=portfolio
     volumes:
       - .:/app
     depends_on:
